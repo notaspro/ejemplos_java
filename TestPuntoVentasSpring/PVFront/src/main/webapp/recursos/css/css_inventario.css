@@ -1,0 +1,44 @@
+
+/*
+        Author: 
+*/
+
+/* CSS para el campo de Hora de ultima modificacion*/
+.campoHora {
+    width: 120px;
+}
+
+/*tamaño de la fuente en la UI Tabs */
+.css_Fichas .ui-tabs-nav li { font-size: 8pt; }
+
+.filaBuscarPorCodigo {
+    display: none;    
+}
+
+.filaBuscarPorCatalogo {
+    display: none;    
+}
+
+.cajaTexto {
+    width: 350px;
+    color: #8c8c8c;
+    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    font-size: 11px;
+    background: #FFFFFF;
+}
+
+.cajaTexto-p {
+    width: 150px;
+    color: #8c8c8c;
+    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    font-size: 11px;
+    background: #FFFFFF;
+}
+
+.camposEncabezado {
+    width: 230px;
+}
+
+label {
+    font-size: 12px;
+}

@@ -1,0 +1,5 @@
+########### Snipets Thymeleaf  ################
+Acceder a un metodo o atributo de una clase de manera estatica
+
+<p th:text="${T(com.gonzasilve.puntoventas.pvfront.utils.PvFrontUtils).getCapaByIdSeccion(1001)} "></p>
+<p th:text="${beans.pvFrontUtils.getCapaByIdSeccion(idSeccion)}"></p>

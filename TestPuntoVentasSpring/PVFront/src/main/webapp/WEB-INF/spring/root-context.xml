@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- Configuracion de BD -->
+	<import resource="classpath*:spring-config/daoContextConfig.xml" />
+	
+	<!-- Configuracion de Spring Security 
+	<import resource="spring-security.xml" />	-->
+	 
+	 <!-- Configuracion de JavaMail -->
+	 <import resource="javamail-config.xml" />
+	 
+	 <!-- Configuracion de Quartz Scheduler -->
+	 <import resource="quartz-config.xml" />
+</beans>

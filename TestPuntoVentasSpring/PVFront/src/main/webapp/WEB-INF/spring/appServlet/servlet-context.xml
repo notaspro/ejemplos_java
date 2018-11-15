@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- Configuracion del Core y en general de la App 	 
+	DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<beans:import resource="classpath*:spring-config/spring-config.xml" />
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory 
+		:: Dispatcher configuration for serving static resources :: -->
+	<!-- <resources mapping="/recursos/**" location="/recursos/" />-->
+	<resources mapping="/recursos/css/**" location="/recursos/css/" />
+	<resources mapping="/recursos/img/**" location="/recursos/img/" />
+	<resources mapping="/recursos/js/**" location="/recursos/js/" />
+	<resources mapping="/recursos/libs/**" location="/recursos/libs/" />
+
+	<!-- Internationalization support -->
+
+	<beans:bean id="localeResolver"	class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<beans:property name="defaultLocale" value="es_MX" />
+	</beans:bean>
+ 
+	<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<beans:property name="paramName" value="language" />
+	</beans:bean>
+ 
+	<beans:bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
+		<beans:property name="interceptors">
+		   <beans:list>
+				<beans:ref bean="localeChangeInterceptor" />
+		   </beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<!-- MESSAGE EXTERNALIZATION/INTERNATIONALIZATION del Front
+		Standard Spring MessageSource implementation   
+	 -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basename" value="locale/messages" />
+		<!-- <property name="basename" value="Messages"/> 
+		entonces los .properties  deberian estar como
+		Messages_xx.properties
+		Messages_yy.properties
+		Messages_zz.properties -->
+	</beans:bean>
+
+	<beans:bean id="pvFrontUtils" class="com.gonzasilve.puntoventas.pvfront.utils.PvFrontUtils">
+
+	</beans:bean>
+	
+	<!-- Test: Archivo de propiedades locales del Modulo Front: classpath: = \src\main\resources\ -->
+<!-- <context:property-placeholder location="classpath:pvfront.properties" /> 
+	<beans:bean id="pvFrontProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
+		<beans:property name="locations"  value="classpath:pvfront.properties" />
+	</beans:bean> -->
+
+	<!-- **************************************************************** -->
+	<!-- THYMELEAF-SPECIFIC ARTIFACTS -->
+	<!-- TemplateResolver <- TemplateEngine <- ViewResolver -->
+	<!-- **************************************************************** -->
+
+	<beans:bean id="templateResolver"
+		class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".html" />
+		<beans:property name="templateMode" value="HTML5" />
+		<!--Template cache is true by default. Set to false if you want  
+			templates to be automatically updated when modified: false        -->
+		<beans:property name="cacheable" value="false"/>
+	</beans:bean>
+
+	<beans:bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
+		<beans:property name="templateResolver" ref="templateResolver" />
+	</beans:bean>
+
+	<beans:bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
+		<beans:property name="templateEngine" ref="templateEngine" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.gonzasilve.puntoventas.pvfront.facade" />
+	<context:component-scan base-package="com.gonzasilve.puntoventas.pvfront.controllers" />
+	
+
+</beans:beans>

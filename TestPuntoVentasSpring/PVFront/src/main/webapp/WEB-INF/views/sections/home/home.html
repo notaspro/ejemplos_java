@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+   <div th:replace="plantillas/plantilla1_fragmentos :: appHeaderHTML"></div>
+
+    <body>
+    <!-- END head -->
+    
+	    
+		
+		<!-- Wrap all page content here -->
+		<div id="wrap">
+		
+			<div th:replace="plantillas/plantilla1_fragmentos :: (${user.isAdmin()}? headerMenuAdminUser : headerMenuNormalUser )"> </div>
+		
+		    <!-- Begin page content -->
+		    <div class="container">
+		
+		        <div class="row">
+		
+		
+		            <div class="span">
+		
+		                <!-- ################################ CONTENIDO DE LA VISTA ACTUAL MOSTRANDOSE ################################ -->
+		                
+						<div th:id="'capa_'+${beans.pvFrontUtils.getCapaByIdSeccion(idSeccion)}" style="display:none;" class="bodySeccion">
+						    <br/><br/>
+						    <h1 align="center">BIENVENIDO AL SISTEMA <BR/><BR/><BR/><span th:text="#{app.webpage.title }">Web app Name</span></h1>
+						    <br/><br/><br/><br/>
+						    <br/><br/><br/><br/>
+						    <br/><br/><br/><br/>
+						</div>
+		                <!-- ################################ FIN CONTENIDO DE LA VISTA ACTUAL MOSTRANDOSE ################################ -->
+		
+
+		
+		                <br/>
+		            </div>
+		        </div>
+		
+		    </div>
+		</div>	<!-- End wrap -->
+			<!-- END body -->
+	
+		<!-- Piea de pagina de esta vista -->
+		<div th:replace="plantillas/plantilla1_fragmentos :: (${user.isAdmin()}? footerAdminUser : footerNormalUser )"></div>
+		
+		
+		<!-- Javascript para esta vista
+		================================================== -->
+		<script th:src="@{'/recursos/js/js_'+${beans.pvFrontUtils.getCapaByIdSeccion(idSeccion)}+'.js'}"></script>
+		
+		<script>
+			/*<![CDATA[*/
+
+			/*]]>*/
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,51 @@
+
+/*
+	Author: 
+*/
+
+
+
+/* CSS para las cajas de texto (input tipo text) */
+.cajaTexto {
+    width: 180px;
+    font-size: 14pt;
+    color: #8c8c8c;
+    font-family: Arial,  Verdana, Helvetica, sans-serif;
+    font-size: 11px;
+}
+
+
+.align_izquierda {
+    text-align:left;
+    vertical-align:middle;
+    border-spacing: 2px;
+    padding: 0px;
+}
+
+
+.align_derecha {
+    text-align:right;
+    vertical-align:middle;
+    border-spacing: 2px;
+    padding: 0px;
+}
+
+.nombreReporte {
+    border-bottom: dashed 1px;
+    border-color: #ABABAB;
+    font-size: 18px;
+}
+.nombreReporte a:hover {
+    text-decoration: none;
+}
+
+/*descripcion de los reportes*/
+.descReportes {
+    color:#ABABAB;
+    padding-top: 0px;
+    padding-left: 10px;
+}
+
+#contenidoReporte {
+    display: none;
+}

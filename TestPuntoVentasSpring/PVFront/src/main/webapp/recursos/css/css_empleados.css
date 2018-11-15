@@ -1,0 +1,21 @@
+
+/*
+        Author: 
+*/
+
+/* Para mostrar los mensajes de error en el registro */
+.msgError {
+    font-size: 16px;
+    font-weight: bold;
+    color: #CC0000;
+}
+
+#frmRegistrarUsuario  {
+    display: none;
+}
+
+.form-chico label {
+    font-size: 12px;
+    width: 150px;
+    text-align: left;
+}

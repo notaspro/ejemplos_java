@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- quartz: defines quartz -->
+	<!-- DESCOMENTAR <bean id="runMeTask" class="mx.com.switz.initzero.utils.quartz.RunMeTask" />		-->
+
+
+	<!-- Spring Quartz -->
+<!-- DESCOMENTAR 
+	<bean name="runMeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+
+		<property name="jobClass" value="mx.com.switz.initzero.utils.quartz.RunMeJob" />
+
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="runMeTask" value-ref="runMeTask" />
+			</map>
+		</property>
+
+	</bean>
+-->
+
+
+
+
+
+
+
+	<!-- Spring Quartz -->
+	<!-- pendiente <bean name="reservacionQuartz" class="org.springframework.scheduling.quartz.JobDetailBean"> 
+		<property name="jobClass" value="com.switz.agendacita.utils.quartz.ReservacionQuartz" 
+		/> <property name="jobDataAsMap"> <map> <entry key="reservacionDao" value-ref="reservacionDaoImpl" 
+		/> <entry key="mailMail" value-ref="mailMail" /> </map> </property> </bean> -->
+
+
+
+
+
+	<!-- <bean id="runMeJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> 
+		<property name="targetObject" ref="runMeTask" /> <property name="targetMethod" 
+		value="printMe" /> </bean> -->
+
+	<!-- Simple Trigger, run every 5 seconds -->
+<!-- DESCOMENTAR 
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+
+		<property name="jobDetail" ref="runMeJob" />
+		<property name="repeatInterval" value="5000" />
+		<property name="startDelay" value="1000" />
+
+	</bean>
+-->
+
+	<!-- pendiente <bean id="reservacionesPendientesST" class="org.springframework.scheduling.quartz.SimpleTriggerBean"> 
+		<property name="jobDetail" ref="reservacionQuartz" /> <property name="repeatInterval" 
+		value="30000" /> <property name="startDelay" value="1000" /> </bean>
+		
+		ESTO ESTABA COMENTADO -->
+
+	<!-- Cron Trigger, run every 5 seconds -->
+<!-- DESCOMENTAR 
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+
+		<property name="jobDetail" ref="runMeJob" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
+
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
+-->
+
+
+</beans>

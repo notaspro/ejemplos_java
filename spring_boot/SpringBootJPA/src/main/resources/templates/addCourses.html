@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Courses</title>
+</head>
+<body>
+	<h2>Add course repository</h2>
+
+	<form action="#" th:action="@{/courses/add}" th:object="${course}" method="post">
+	
+		<p>
+		<label>Name: <input type="text" th:field="*{name}" /></label>
+		</p>
+		
+		<p>
+		<label> Description: <input type="text" th:field="*{description}" /></label>
+		</p>
+		
+		<p>
+		<label >Price: <input type="number" th:field="*{price}" /></label>
+		</p>
+		
+		<p>
+		<label >Hours: <input type="number" th:field="*{hours}" /></label>
+		</p>
+	
+	
+		 <input type="submit" value="Enviar" />
+	</form>
+</body>
+</html>

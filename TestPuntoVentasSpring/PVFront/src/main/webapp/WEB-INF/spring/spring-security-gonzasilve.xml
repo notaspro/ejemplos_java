@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- Configuracion de Spring Security	http://doanduyhai.wordpress.com/ -->
+	
+	
+	<!-- the <filter-chain-map> allows to match a particular path pattern agains a security 
+		filter chain defined in <filter-chain> tag -->
+	<bean id="filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
+	    <security:filter-chain-map path-type="ant">
+	    
+	    <!-- filter chain dedicated to Web Services calls -->
+	        <security:filter-chain pattern="/webServices/**" filters="
+	               securityContextPersistenceFilterForWebServices,
+	               WSAuthenticationFilter,
+	               exceptionTranslationFilter,
+	               filterSecurityInterceptor" />
+		
+		<!--  generic filter chain for all other requests. -->
+	        <security:filter-chain pattern="/**"  filters="
+	               securityContextPersistentFilter,
+	               logoutFilter,
+	               authenticationProcessingFilter,
+	               anonymousFilter,
+	               exceptionTranslationFilter,
+	               filterSecurityInterceptor" />
+	               
+	    </security:filter-chain-map>
+	</bean>
+	
+	<!-- Filter to store the Authentication object in the HTTP Session 
+	Es usado para guardar y recuperar el contexto de seguridad (user credentials) entre sucesivos accesos a la aplicacion-->   
+	<bean id="securityContextPersistentFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+	    <property name="securityContextRepository" ref="securityContextRepository" />
+	</bean>	     
+	<!-- Aqui estamos indicando donde se guardara el contexto de seguridad  -->
+	<bean id="securityContextRepository" class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" />
+
+
+
+
+
+
+
+
+	<!-- The LogoutFilter is in charge of logging out the current user and invalidating the security context. 
+	The task of invalidating the HTTP session is again delegated to another actor, the SecurityContextLogoutHandler. -->
+	<bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+	    <constructor-arg value="/pages/security/logout.html" />
+	    <constructor-arg>
+	        <list>
+	            <bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+	        </list>
+	    </constructor-arg>
+	    <property name="filterProcessesUrl" value="/j_myApplication_logout"/>
+	</bean>
+
+
+
+
+
+
+
+	<!-- Aqui definimos la URL para el proceso de login  (/j_myApplication_security_check) Esta url
+	debe ser a la que apunte el action del formulario de login; el valor por defecto es  j_spring_security_check
+	pero puede ser cambiada aqui -->
+	<bean id="authenticationProcessingFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+	    <property name="authenticationManager" ref="authenticationManager"/>
+	    <property name="filterProcessesUrl" value="/j_myApplication_security_check"/>
+		<!-- Si queremos cambiar  los nombres de los campos de autenticacion, aqui se puede hacer
+		<property name="usernameParameter" value="j_myUserNameId"/>
+    	<property name="passwordParameter" value="j_myPasswordId"/>
+    	Estos  mismos Ids se usarian en los campos del formulario de login		-->
+	    <!-- Spring Provee dos implementaciones: SimpleUrlAuthenticationSuccessHandler que redirects automatically the user to the defaultTargetUrl set as parameter	    
+	    y la que esta a continuacion: redirects the user to the requested page. If the initial request does not target any specific page, 
+	    redirect it to the defaultTargetUrl set as parameter     -->
+	    <property name="authenticationSuccessHandler">
+	        <bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+	            <property name="defaultTargetUrl" value="/pages/home.html" />
+	        </bean>
+	    </property>
+	    
+	    <!-- This implementation simply redirects the user to an error page in case of unsuccessfull authentication. 
+	    The error page URL set through the defaultFailureUrl parameter. -->
+	    <property name="authenticationFailureHandler">
+	        <bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+	            <property name="defaultFailureUrl" value="/security/login.html?login_error=1" />
+	        </bean>
+	    </property>
+	</bean> 
+
+
+
+
+
+
+	<!-- First, the implementation of the AuthenticationManager interface is the ProviderManager
+	 class which only delegates the job of authentication to a list of authentication providers. -->	
+	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+	    <property name="providers">
+	        <list>
+	            <ref bean="myAuthenticationProvider" />
+	            <ref bean="anonymousProvider" />
+	        </list>
+	    </property>
+	</bean>
+	<!-- Proveedor para checkar el rol anonimo -->     
+	<bean id="anonymousProvider" class="org.springframework.security.authentication.AnonymousAuthenticationProvider">
+	    <property name="key" value="unique_key_123" />
+	</bean>
+	<!--  the user-define provider: myAuthenticationProvider. It is based on the DaoAuthenticationProvider implementation which 
+	performs authentication against a datasource.  -->
+	<bean id="myAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+	    <property name="userDetailsService" ref="myUserDetailsService" />
+	</bean>
+	     
+	<bean id="myUserDetailsService" class="com.gonzasilve.puntoventas.pvcore.service.PVSecurityService" >
+	    <property name="userDao" ref="myUserDao" />
+	</bean>
+
+
+
+
+
+
+	<!-- El siguiente filtro filtro en la cadena de filtros es el AnonymousFilter 
+	 El trabajo de este filtro es conceder un rol anonimo al usuario. By default if there is no token in
+	 the security context, this filter will create one with anonymous attribute (defined via the userAttribute
+	  parameter) and the key value. 
+	Later, when the AnonymousAuthenticationProvider check the security context, if it finds a token with 
+	ROLE_ANONYMOUS role and a matching key value then the anonymous authentication is successfull.
+	-->
+	<bean id="anonymousFilter" class="org.springframework.security.web.authentication.AnonymousAuthenticationFilter" >
+	    <property name="key" value="unique_key_123" />
+	    <property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS" />
+	</bean> 
+	
+	
+	
+	
+	
+	
+	
+	<!-- Filter to redirect to login page.
+	The ExceptionTranslationFilter purpose is to redirect the user to the login page if he’s 
+	not yet authenticated and to a default error page if he tries to access an unauthorized resources.
+	The authenticationEntryPoint defines a loginFormUrl pointing to the default login page. 
+	Optionally you can force usage of HTTPS by setting forceHttps to true.	 -->
+	<bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+	        <property name="authenticationEntryPoint" ref="authenticationEntryPoint"/>
+	        <property name="accessDeniedHandler" ref="accessDeniedHandler"/>
+	</bean>
+	     
+	<bean id="authenticationEntryPoint"  class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+	      <property name="loginFormUrl" value="/security/login.html"/>
+	      <property name="forceHttps" value="false"/>
+	</bean>
+	     
+	<bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+	    <property name="errorPage" value="/security/accessDenied.html"/>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	<!-- http://doanduyhai.wordpress.com/2012/02/19/spring-security-part-iv-exceptiontranslationfilter-filtersecurityinterceptor/ -->
+	<!-- Filter for role checking, aqui definimos las reglas de control de acceso -->
+	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+	    <property name="authenticationManager" ref="authenticationManager"/>
+	    <property name="accessDecisionManager" ref="httpRequestAccessDecisionManager"/>
+	    
+	    <property name="securityMetadataSource">
+	        <security:filter-security-metadata-source lowercase-comparisons="true" request-matcher="ant" use-expressions="true">
+	        	<!-- Para ver todas las expresiones disponibles para control de acceso
+	        	http://docs.spring.io/spring-security/site/docs/3.0.x/reference/el-access.html 
+	        	Nota: Spring aplica las reglas de control de acceso en el orden de su declaracion, por ello
+	        	es importante primero declaras los recursos no asegurados y finalizar con los
+	        	recursos restringidos.
+	        	Por ejemplo si declaramos <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+	        	antes que <sec:intercept-url pattern=”/security/**” access=”permitAll”/> la aplicacion nunca va a 
+	        	ser accesible desde que se entra al formulario de login, el usuario siempre sera
+	        	rechazado porque no esta autenticado
+	        	-->
+	        	
+	            <security:intercept-url pattern="/security/**" access="permitAll"/>
+	            <security:intercept-url pattern="/resources/**" access="permitAll"/>
+	            <security:intercept-url pattern="/recursos/**" access="permitAll"/>
+<!-- 
+	            <security:intercept-url pattern="/pages/Settings/**" access="hasRole('SETTINGS')"/>
+	            <security:intercept-url pattern="/pages/Home/*" access="hasRole('HOME')"/>             
+	            <security:intercept-url pattern="/pages/Admin/**" access="hasRole('ADMINISTRATOR')"/>
+	            <security:intercept-url pattern="/servlet/Download" access="hasAnyRole('DOWNLOAD','PREMIUM_ACCOUNT')"/>
+ -->	                 
+	            <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+	            
+	        </security:filter-security-metadata-source>
+	    </property>
+	</bean>
+	
+	
+	<!-- Gestor para hacer cumplir las reglas de control de acceso anteriores 
+	usaremos AffirmativeBased proporcionada por Spring, esta implementacion simplemente concede acceso 
+	si alguno de los 'decisionVoters'  inyectados retorna una respuesta afirmativa.
+	existen otros: ConsensusBased, UnanimousBased-->
+	<bean id="httpRequestAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+	    <!-- se establece en false de manera que se requiere al menos una respuesta afirmativa de los 
+	    votantes de desicion para conceder acceso -->
+	    <property name="allowIfAllAbstainDecisions" value="false"/>
+	    
+	    <property name="decisionVoters">
+	        <list>
+	            <ref bean="webExpressionVoter"/>
+	            <ref bean="authenticatedVoter"/>
+	        </list>
+	    </property>
+	</bean>
+	<!-- grant access using Expression-Based Access Control as mentioned above. This voter is mandatory 
+	if we have specified use-expressions = true for the <filter-security-metadata-source> -->
+	<bean id="webExpressionVoter" class="org.springframework.security.web.access.expression.WebExpressionVoter"/>
+	
+	<!-- default voter. This voter will give affirmative response if the user is authenticated, authenticated 
+	with remember-me option or is authenticated anonymously -->
+	<bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter" />
+	    
+	    
+	    
+	    
+	    
+	<!-- webInvocationPrivilegeEvaluator necesario para usar  <security:authorized url="xx"> -->
+	<bean id="webInvocationPrivilegeEvaluator" class="org.springframework.security.web.access.DefaultWebInvocationPrivilegeEvaluator">
+	    <constructor-arg ref="filterSecurityInterceptor"></constructor-arg>
+	</bean>
+
+</beans>

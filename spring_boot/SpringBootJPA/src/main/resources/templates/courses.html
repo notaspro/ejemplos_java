@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Courses</title>
+</head>
+<body>
+	<h2>Test courses repository</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Desription</th>
+				<th>Price</th>
+				<th>Hours</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="course: ${courses}">
+				<td><span th:text="${course.id}"></span></td>
+				<td><span th:text="${course.name}"></span></td>
+				<td><span th:text="${course.description}"></span></td>
+				<td><span th:text="${course.price}"></span></td>
+				<td><span th:text="${course.hours}"></span></td>
+				
+			</tr>
+		</tbody>
+	</table>
+	<br/>
+	<a href="/courses/add" >Agregar curso</a>
+</body>
+</html>

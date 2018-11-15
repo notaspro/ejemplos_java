@@ -1,0 +1,10 @@
+problema: Cambiar el nombre del despliegue PVFront(ProyectoXX) en tomcat
+Objetivo: cambiar/quitar ProyectoXX
+
+En la carpeta .settings del proyecto
+modificar el archivo 
+org.eclipse.wst.common.component
+y en la linea <wb-module deploy-name="PVFront">
+cambiar el deploy name por el nombre deseado, ademas en el web.xml 
+cambiar <display-name>PVFront</display-name>  tambien por el
+nombre deseado

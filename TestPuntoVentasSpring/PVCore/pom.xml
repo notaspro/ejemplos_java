@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.gonzasilve.puntoventas</groupId>
+    <artifactId>PuntoVentasSpring</artifactId>
+    <version>1.0</version>
+  </parent>
+	
+  <groupId>com.gonzasilve.puntoventas.pvcore</groupId>
+  <artifactId>PVCore</artifactId>    
+	<!-- La version se toma del pom parent, a menos que fuera diferente a la de este modulo se especifica 
+	<version>1.0</version>  -->
+	
+  <name>PVCore</name>
+  <url>http://www.notas-programacion.com</url>
+	
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
+    <!-- Hibernate core (no borrar, posteriormente se usara para hibernate-core)		-->
+    <hibernate.version>4.2.0.Final</hibernate.version>
+    
+	<!-- Testing -->
+	<junit.version>4.10</junit.version>
+	
+	<!-- Log4j -->
+	<log4j-version>1.2.17</log4j-version>
+	
+	<!-- spring Version for spring-aop, spring-orm -->
+	<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+	
+	<!-- AspectJ Version valida para aspectjrt y aspectjweaver -->
+	<org.aspectj-version>1.6.11</org.aspectj-version>
+	<!-- <org.aspectj-version>1.6.10</org.aspectj-version> -->
+	
+	<!-- CgLib version -->
+	<cglib.version>2.2.2</cglib.version>
+	
+	<!-- Habilitar inyeccion con el JSR-330 -->
+	<javax.inject.version>1</javax.inject.version>
+	
+    <!-- persistence -->
+    <tomcat-dbcp.version>7.0.42</tomcat-dbcp.version>
+    <mysql-connector-java.version>5.1.26</mysql-connector-java.version>
+    
+	<!-- Hibernate , implictamente se agrega Javassist-->	
+	<!-- hibernate core version --> 
+	<hibernate.version>4.2.0.Final</hibernate.version>
+
+	<!-- javax.validation -->
+	<javax.validation.version>1.0.0.GA</javax.validation.version>
+	
+	<!-- util -->
+	<commons-lang3.version>3.1</commons-lang3.version>
+	
+	<!-- Loggin SLF4j -->
+	<org.slf4j-version>1.6.6</org.slf4j-version>
+  </properties>
+	
+  <dependencies>
+	<!-- Depende del modulo Modelo -->
+	<dependency>
+		<groupId>com.gonzasilve.puntoventas.pvmodel</groupId>
+		<artifactId>PVModel</artifactId>
+		<version>1.0</version>
+	</dependency>
+
+  	<!-- Dependencia pendiente investigar si se puede mover al PVModel (esta repetida ahi) -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+ 
+	<!-- Logging  -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>${log4j-version}</version>			
+		<exclusions>
+			<exclusion>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>javax.jms</groupId>
+				<artifactId>jms</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>com.sun.jdmk</groupId>
+				<artifactId>jmxtools</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>com.sun.jmx</groupId>
+				<artifactId>jmxri</artifactId>
+			</exclusion>
+		</exclusions>
+		<scope>runtime</scope>
+	</dependency>
+
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+
+ 	<!-- Hibernate Core -->
+
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>	
+	<!-- Bean Validation => http://docs.oracle.com/javaee/6/tutorial/doc/gircz.html -->
+	<dependency>
+		<groupId>javax.validation</groupId>
+		<artifactId>validation-api</artifactId>
+		<version>${javax.validation.version}</version>
+	</dependency>
+
+ 
+ <!-- ####### SPRING FRAMEWORK ########### -->
+    <!-- AOP en este caso para el manejo transaccional -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>${org.springframework-version}</version>
+    </dependency>
+    <!-- capa de datos -->		
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>${org.springframework-version}</version>
+    </dependency>
+ 
+     <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-core</artifactId>
+         <version>${org.springframework-version}</version>
+     </dependency>
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+ 	<!-- Spring  (Excluye Commons Logging en favor de SLF4j ) -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${org.springframework-version}</version>
+		<exclusions>
+			<exclusion>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+			</exclusion>
+		</exclusions>
+	</dependency>
+	
+    <!-- para poder utilizar algun archivo de configuracion  de spring en nuestras 
+    	pruebas unitarias como applicationContext.xml  -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${org.springframework-version}</version>
+    </dependency>
+       
+	<!-- AspectJ -->
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjrt</artifactId>
+        <version>${org.aspectj-version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.aspectj</groupId>
+        <artifactId>aspectjweaver</artifactId>
+        <version>${org.aspectj-version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>${cglib.version}</version>
+        <scope>runtime</scope>
+    </dependency>
+
+	<!-- Habilitar Inyeccion con el JSR-330 -->
+	<dependency>
+		<groupId>javax.inject</groupId>
+		<artifactId>javax.inject</artifactId>
+		<version>${javax.inject.version}</version>
+	</dependency>
+
+    <!-- JDBC connector -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql-connector-java.version}</version>
+        <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-dbcp</artifactId>
+        <version>${tomcat-dbcp.version}</version>
+    </dependency>
+	
+	<!-- 
+	Lang provides a host of helper utilities for the java.lang API, notably String manipulation
+	 methods, basic numerical methods, object reflection, concurrency, creation and serialization
+	  and System properties. Additionally it contains basic enhancements to java.util.Date and a 
+	  series of utilities dedicated to help with building methods, such as hashCode, toString and equals. 	--> 	
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	    <version>${commons-lang3.version}</version>
+	    <scope>test</scope>
+	</dependency>
+
+        				
+  </dependencies>
+	
+	<build>
+	<finalName>PVCore</finalName>
+    <resources>
+ 
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>locale/*.properties</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources/spring-config</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+
+    </resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<!-- Omitir Tests del Core -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+					<junitArtifactName>junit:junit</junitArtifactName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

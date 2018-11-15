@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.gonzasilve.puntoventas</groupId>
+    <artifactId>PuntoVentasSpring</artifactId>
+    <version>1.0</version>
+  </parent>
+	
+  <groupId>com.gonzasilve.puntoventas.pvmodel</groupId>
+  <artifactId>PVModel</artifactId>
+<!-- La version se toma del pom parent, a menos que fuera diferente a la de este modulo se especifica 
+	<version>1.0</version>  -->
+	
+  <name>PVModel</name>
+  <url>http://www.notas-programacion.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <hibernate.version>4.2.0.Final</hibernate.version>
+    <hibernate.validator.version>4.2.0.Final</hibernate.validator.version>
+    
+	<!-- Testing -->
+	<junit.version>4.10</junit.version>	 
+	
+  </properties>
+
+	
+  <dependencies>
+  	<!-- Definicion de entidades -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-entitymanager</artifactId>
+		<version>${hibernate.version}</version>
+	</dependency>
+	
+	<!-- Validacion atributos de entidades -->
+	<dependency>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-validator</artifactId>
+		<version>${hibernate.validator.version}</version>
+	</dependency>
+	
+	<!-- Se agrega debido a que se realizan pruebas unitarias de 
+	setters y getters de las Entidades	y este modulo no depende de ningun otro -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+  </dependencies>
+	
+	
+	<build>
+	<finalName>PVModel</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<!-- Omitir Tests del modulo Modelo -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>true</skipTests>
+					<junitArtifactName>junit:junit</junitArtifactName>
+				</configuration>
+			</plugin>
+			
+ 			<!-- Atach Javadoc 
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-javadoc-plugin</artifactId>
+			  <executions>
+			    <execution>
+			      <id>attach-javadocs</id>
+			      <goals>
+			        <goal>jar</goal>
+			      </goals>
+			    </execution>
+			  </executions>
+			</plugin>	-->
+		</plugins>
+	</build>
+	
+</project>
