@@ -1,0 +1,22 @@
+Url de descarga del http server
+https://www.npmjs.com/package/http-server
+
+
+Instalar el servidor htpp de node
+npm install http-server -g
+
+Ejecutar el servidor en la carpeta actual
+http-server 
+
+-p permite enviarle el puerto
+http-server  -p 8090
+
+Url con los metodos de fetch
+https://developer.mozilla.org/en-US/docs/Web/API/Response
+
+Plugin para activar CORS en Chrome
+https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi
+
+Api para hacer peticiones a servicios (GET, POST, PUT) y obtener respuestas JSON
+https://reqres.in/
+

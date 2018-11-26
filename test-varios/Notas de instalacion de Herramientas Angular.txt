@@ -1,0 +1,37 @@
+
+Validar instalacion de NodeJS
+node -v
+
+Validar El Node Package Manager
+npm -v
+
+Instalacion de TypeScript con el  Node Package Manager 
+(en linea de comandos modo administrador o con sudo)
+npm install -g typescript
+
+
+Validar instalacion de TypeScript
+tsc --version
+
+Instalar el Gestor de Angular con el  Node Package Manager 
+npm install -g @angular/cli
+
+Validar la instalacion del Gestor de Angular (Angular/CLI)
+ng --version
+
+Instalar IONIC, sirve para crear aplicaciones moviles
+(https://ionicframework.com/)
+npm install -g ionic
+
+Instalar editores de Texto
+Atom:
+https://atom.io/
+
+Visual Studio Code
+https://code.visualstudio.com/
+
+Despues de Instalar Git configurar el usuario global
+git config --global user.name "Gonzalo Silverio"
+git config --global user.email silveriosw@gmail.com
+
+

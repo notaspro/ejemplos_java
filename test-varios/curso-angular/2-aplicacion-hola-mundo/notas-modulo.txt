@@ -1,0 +1,98 @@
+Componentes
+Son clases normales con un decorador especifico
+
+Directivas estructurales
+Son instrucciones que le dicen al HTML que tiene que hacer
+Ejemplos de Directivas estructurales son 
+ngIf = true (el elemento html si se muestra), ngIf = false (el elemento html no se muestra)
+ngFor (repeticiones de elemntos html)
+
+Documentacion en Angular (angular.io)
+pk = Package
+i = Interface
+C= Clase 
+K = Constante
+f = funcion
+E = Enumeracion
+P = Pipe
+
+Pagina para pruebas y demostraciones con Angular
+https://plnkr.co/plunks
+https://stackblitz.com	(angular, reac, node)
+
+---- Nota de Actualizacion de Angular CLI ----
+Al crear un proyecto con 
+ng new miNombreProyecto
+Indicar que no queremos utilizar el routing y 
+utilizar CSS como manejador de estilos
+
+---- Creando una aplicacion Hola Mundo ---- 
+
+Iniciar el proyecto 
+ng serve
+Los parametros que se le pueden enviar son:
+-p numeroPuerto    	Para indicar el numero de puerto en el cual se iniciar la app
+-o 					- Para abrir el navegador
+
+A estas llaves {{ miVariable }} es conocido como una Interpolacion
+
+---- Estructura de un proyecto Angular ----
+Para descarga los modulos de node (dentro de la carpeta del proyecto angular) ejecutar:
+npm install
+
+Un proyecto Angular, se compone de las siguientes las carpetas & archivos:
+e2e  			Es para hacer las pruebas automaticas
+node_modules 	Ahi se guardan los modulos de Node con el objetivo de desarrollo
+.editorconfig	Ahi se guarda la configuracion del editor.
+.gitignore		Archivo de GIT para ignorar archivos
+angular.json	Le dice a angular como es nuestra aplicacion y como funciona
+package-lock.json	Le dice a angular como fue creado el proyecto, se crea en automatico, 
+					es como una traza de los que se fue haciendo en el proyecto.
+package.json	Son las dependencias de nuestro programa, por lo general se modifica y crea en automatico.
+				se organiza en dependencias de produccion (dependencies) y dependencias de desarrollo (devDependencies)
+README.md		Se crea en automatico y explica como funciona la aplicacion por ejemplo en GitHub
+tsconfig.json	Le dice a TypeScript como debe trabajar, por ejemplo a que estandar debe apegarse (ES5, ES6, etc)
+tslint.json		Son reglas para forzar a escribir un codigo mas limpio
+src/			Es donde se guarda la aplicacion de Angular
+	app/		Contiene la aplicacion en si
+	app/app.component.ts	Es el primer archivo a cargar, aqui permite especificar el selector del html
+							donde se va a renderizar toda la aplicacion.
+	app/app.component.css	Declaracion de estilos que se aplican unicamente a app.component.html estos archivos
+							se enlazan en el decorador en la propiedad styleUrls del archivo app.component.ts
+	app/app.component.html		La vista HTML del componente
+	app/app.component.spec.ts	Archivo de pruebas automaticas
+	app/app.module.ts			Es una simple clase de typescript permite definir en la aplicacion Angular los 
+								componentes a usar, los servicios, etc.
+	assets/		Contiene los recursos estaticos como imagenes etc. El archivo .gitkeep indica que cuando 
+				se suba a git esta carpeta se mantenga.
+	assets/		Contiene declaras las variables de ambiente de produccion (environment.prod.ts) y las 
+				variables de ambiente de desarrollo (environment.ts)
+	browserslist	Permite ajustar el soporte de CSS
+	favicon.ico		Icono de la aplicacion Angular
+	karma.conf.js	Archivo de configuracion de las pruebas de Karma
+	main.ts			Es punto de entrada de la aplicacion Angular, similar a la funcion main() de Java.
+					la funcion platformBrowserDynamic() configura a esta aplicacion de angular como una
+					aplicacion web.
+	polyfills.ts,  	Configura la compatibilidad entre viejos navegadores web.
+	tests.css		Archivo de estilos css globales a todos los modulos o la aplicacion completa.
+	tsconfig.app.json	Configuraciones propias de la aplicacion de TypeScript
+	tsconfig.spec.json	Configuraciones para hacer las pruebas
+	tslint.json			configuracion de los errores que se presentaran en la aplicacion angular
+				
+
+En vez de utilizar Bootstrap se puede usar https://foundation.zurb.com/
+
+Crear un Componente mediante Angular/CLI
+ng generate component components/footer
+Es equivalente a 
+ng g c components/footer
+
+CSS para pie de pagina abajo
+footer {
+    color: gray;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+
